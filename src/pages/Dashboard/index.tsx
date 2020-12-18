@@ -11,6 +11,7 @@ import Header from '../../components/Header';
 import formatValue from '../../utils/formatValue';
 
 import { Container, CardContainer, Card, TableContainer } from './styles';
+import { useAuth } from '../../hooks/Auth';
 
 interface Transaction {
   id: string;
@@ -32,10 +33,11 @@ interface Balance {
 const Dashboard: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [balance, setBalance] = useState<Balance>({} as Balance);
+  const { user } = useAuth();
 
   useEffect(() => {
     async function loadTransactions(): Promise<void> {
-      api.get('/transaction/1').then(response => {
+      api.get(`/transaction/${user.id}`).then(response => {
         const transactionsFormatted = response.data.transactions.map(
           (transaction: Transaction) => ({
             ...transaction,

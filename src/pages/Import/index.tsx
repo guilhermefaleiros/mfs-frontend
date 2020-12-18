@@ -31,7 +31,7 @@ const Import: React.FC = () => {
     try {
       await api.post('/transaction/upload/1', data);
 
-      history.push('/');
+      history.push('/dashboard');
     } catch (err) {
       console.log(err.response);
     }
